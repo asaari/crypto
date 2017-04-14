@@ -24,6 +24,9 @@ public class TxHandler {
     
     	UTXOPool unclaimed = new UTXOPool();
     	
+    	double outputValues = 0;
+    	double inputValues = 0;
+    	
     	for (int i = 0; i < tx.numOutputs(); i++) {
     		Transaction.Output output = tx.getOutput(i);
     		Transaction.Input input = tx.getInput(i);
@@ -46,11 +49,15 @@ public class TxHandler {
     		}
     		
     		//5
-    		
+    		outputValues += output.value;
+    		Transaction.Output out = utxoPool.getTxOutput(u);
+			inputValues += utxoPool.getTxOutput(u).value;
+			
+	
     	}
+    	return outputValues < inputValues ? false : true;
     	
-    	
-    	return true;
+    
     }
     
     /**
